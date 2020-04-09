@@ -1,0 +1,82 @@
+import React, { useEffect } from "react";
+import { ICountState, IStateDispatchProps } from "./Reducer";
+
+
+// Functional approach has problem that timer keeps getting interrupted by rerender 
+
+function StopWatchFN(props: IStateDispatchProps) {
+    const countState = props.countState;
+    const dispatch = props.dispatch;
+
+    console.log("Stopwatch " + JSON.stringify(countState));
+
+    useEffect(() => {
+        if (countState.stopWatch === 0) {
+            dispatch({ type: 'reset' });
+        }
+        else {
+            const timeId = setTimeout(() => {
+                console.log("Timeout " + JSON.stringify(countState));
+                if (countState.stopWatch > 0) {
+                    dispatch({ type: 'decrement_stopwatch' });
+                }
+            }, 1000);
+
+            return () => {
+                clearTimeout(timeId);
+            };
+        }
+    });
+
+    return (
+        <div>
+            <h1>Stopwatch Count: {countState.stopWatch}</h1>
+        </div>
+    );
+
+}
+
+class StopWatch extends React.Component<IStateDispatchProps> {
+
+    constructor(props: IStateDispatchProps) {
+        super(props);
+
+        this.state = props.countState;
+
+        console.log("Stopwatch " + JSON.stringify(props.countState));
+
+        setInterval(() => {
+            let countState: ICountState = this.state as ICountState;
+
+            if (countState.stopWatch === 0) {
+                console.log("Reset " + JSON.stringify(countState));
+                props.dispatch({ type: 'reset' });
+            }
+            else {
+                console.log("Decrement " + JSON.stringify(countState));
+                props.dispatch({ type: 'decrement_stopwatch' });
+            }
+        }, 1000);
+    }
+
+    static getDerivedStateFromProps(nextProps: IStateDispatchProps, prevState: ICountState) {
+        prevState.stopWatch = nextProps.countState.stopWatch;
+
+        return prevState;
+    }
+
+    render() {
+        let countState: ICountState = this.state as ICountState;
+
+        console.log("Render stopwatch" + JSON.stringify(countState));
+        return (
+            <div>
+                <h1>Stopwatch Count: {countState.stopWatch}</h1>
+            </div>
+        );
+    }
+}
+
+export default StopWatchFN;
+
+//export defauult StopWatch;    // comment in to use class based 
