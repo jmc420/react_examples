@@ -1,7 +1,7 @@
 import {Dispatch} from "react";
 
 export type ActionType = {
-    type: 'reset' | 'decrement_count' | 'increment_count' |'decrement_stopwatch' | 'increment_stopwatch'
+    type: 'reset' | 'decrement_count' | 'increment_count' |'decrement_stopwatch' 
   }
 
 export interface ICountState {
@@ -25,9 +25,10 @@ export function reducer(state:ICountState, action:ActionType):ICountState {
       case 'decrement_count':
         return { ...state, counter: state.counter - 1 };
         case 'decrement_stopwatch':
-        return { ...state, stopWatch: state.stopWatch - 1 };
-      case 'increment_stopwatch':
-        return { ...state, stopWatch: state.stopWatch +1 };
+          if (state.stopWatch > 0) {
+            return { ...state, stopWatch: state.stopWatch - 1 };
+          }
+          return initialState;
       default:
         return state;
     }

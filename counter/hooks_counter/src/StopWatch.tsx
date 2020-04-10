@@ -11,22 +11,19 @@ function StopWatchFN(props: IStateDispatchProps) {
     console.log("Stopwatch " + JSON.stringify(countState));
 
     useEffect(() => {
-        if (countState.stopWatch === 0) {
-            dispatch({ type: 'reset' });
-        }
-        else {
-            const timeId = setTimeout(() => {
-                console.log("Timeout " + JSON.stringify(countState));
-                if (countState.stopWatch > 0) {
-                    dispatch({ type: 'decrement_stopwatch' });
-                }
-            }, 1000);
+        const timeId = setInterval(() => {
+            console.log("Timeout " + JSON.stringify(countState));
+            dispatch({ type: 'decrement_stopwatch' });
+        }, 1000);
 
-            return () => {
-                clearTimeout(timeId);
-            };
-        }
-    });
+        return () => {
+            console.log("Finish timer");
+            clearTimeout(timeId);
+        };
+
+    // using empty array means that timer will not finish ar rerender
+    // add countState will cause timer will end on every re-render
+    }, []);
 
     return (
         <div>
@@ -48,14 +45,9 @@ class StopWatch extends React.Component<IStateDispatchProps> {
         setInterval(() => {
             let countState: ICountState = this.state as ICountState;
 
-            if (countState.stopWatch === 0) {
-                console.log("Reset " + JSON.stringify(countState));
-                props.dispatch({ type: 'reset' });
-            }
-            else {
-                console.log("Decrement " + JSON.stringify(countState));
-                props.dispatch({ type: 'decrement_stopwatch' });
-            }
+            console.log("Reset " + JSON.stringify(countState));
+            props.dispatch({ type: 'decrement_stopwatch' });
+
         }, 1000);
     }
 
@@ -79,4 +71,5 @@ class StopWatch extends React.Component<IStateDispatchProps> {
 
 export default StopWatchFN;
 
-//export defauult StopWatch;    // comment in to use class based 
+// comment in to use class based 
+//export default StopWatch;
