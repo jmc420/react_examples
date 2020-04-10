@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ICountState, IStateDispatchProps } from "./Reducer";
 
 
@@ -7,12 +7,17 @@ import { ICountState, IStateDispatchProps } from "./Reducer";
 function StopWatchFN(props: IStateDispatchProps) {
     const countState = props.countState;
     const dispatch = props.dispatch;
+    const countStateRef = useRef(countState)
 
     console.log("Stopwatch " + JSON.stringify(countState));
 
+    useEffect(() => () => {
+        countStateRef.current = countState;
+      },[countState]);
+
     useEffect(() => {
         const timeId = setInterval(() => {
-            console.log("Timeout " + JSON.stringify(countState));
+            console.log("Timeout " + JSON.stringify(countStateRef));
             dispatch({ type: 'decrement_stopwatch' });
         }, 1000);
 
