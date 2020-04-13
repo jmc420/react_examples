@@ -11,7 +11,7 @@ function StopWatchFN(props: IStateDispatchProps) {
 
     console.log("Stopwatch " + JSON.stringify(countState));
 
-    useEffect(() => () => {
+    useEffect(() => {
         countStateRef.current = countState;
       },[countState]);
 

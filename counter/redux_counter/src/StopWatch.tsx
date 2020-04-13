@@ -11,7 +11,7 @@ function StopWatchFN() {
 
     console.log("Stopwatch " + JSON.stringify(stopWatch));
 
-    useEffect(() => () => {
+    useEffect(() => {
         stopWatchRef.current = stopWatch;
     }, [stopWatch]);
 
