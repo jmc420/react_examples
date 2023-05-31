@@ -1,0 +1,12 @@
+
+
+/build/**/*.js
+/coverage/
+/dist/
+/node_modules/
+/public/*.js
+
+.project
+.settings
+.DS_Store
+components
