@@ -1,5 +1,6 @@
 
-export const AccountURL = "account";
+export const AccountURL = "/account";
 export const HomeURL = "/";
-export const ProjectURL = "projects";
-export const SettingsURL = "settings";
+export const NewProjectURL = "/projects/new";
+export const ProjectURL = "/projects";
+export const SettingsURL = "/settings";

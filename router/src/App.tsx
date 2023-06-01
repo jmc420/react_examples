@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AccountURL, HomeURL, ProjectURL, SettingsURL } from './Constants';
+import { AccountURL, HomeURL, NewProjectURL, ProjectURL, SettingsURL } from './Constants';
 import AppBarMenu, { IAppBarMenuProps } from './AppBarMenu';
 import Account, { IAccountProps } from './Account';
 import Home, { IHomeProps } from './Home';
+import NewProject, { INewProjectProps } from './NewProject';
 import Project, { IProjectProps } from './Project';
 import Settings, { ISettingsProps } from './Settings';
 
@@ -36,6 +37,10 @@ export default function App() {
     appBarHeight: state.appBarHeight
   }
 
+  const newProjectProps: INewProjectProps = {
+    appBarHeight: state.appBarHeight
+  }
+
   const projectProps: IProjectProps = {
     appBarHeight: state.appBarHeight
   }
@@ -49,7 +54,11 @@ export default function App() {
       <Routes>
         <Route path={HomeURL} element={<Home {...homeProps} />} />
         <Route path={AccountURL} element={<Account {...accountProps} />} />
-        <Route path={ProjectURL} element={<Project {...projectProps} />} />
+        <Route path={ProjectURL} >
+          <Route index={true} element={<Project {...projectProps} />} />
+          <Route path={NewProjectURL} element={<NewProject {...newProjectProps} />} />
+        </Route>
+
         <Route path={SettingsURL} element={<Settings {...settingsProps} />} />
       </Routes>
     </div>

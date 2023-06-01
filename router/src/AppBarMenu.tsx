@@ -22,7 +22,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
-import { AccountURL, HomeURL, ProjectURL, SettingsURL } from './Constants';
+import { AccountURL, HomeURL, NewProjectURL, ProjectURL, SettingsURL } from './Constants';
 
 type NotifyAppBarHeight = (height: number) => void;
 
@@ -72,6 +72,12 @@ export default function AppBarMenu(props: IAppBarMenuProps) {
         }
     }
 
+    function newProject() {
+        navigate(NewProjectURL);
+        closeDrawer();
+    }
+
+
     function openAccount() {
         navigate(AccountURL);
         closeDrawer();
@@ -111,6 +117,9 @@ export default function AppBarMenu(props: IAppBarMenuProps) {
                         sx={{ mr: 2 }}>
                         <MenuIcon />
                     </IconButton>
+                    <MenuItem onClick={newProject}>
+                        <Typography textAlign="center">New Project</Typography>
+                    </MenuItem>
                     <MenuItem onClick={openProject}>
                         <Typography textAlign="center">Projects</Typography>
                     </MenuItem>
