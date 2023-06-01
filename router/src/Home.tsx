@@ -1,12 +1,14 @@
 import React from "react";
 
-export default function Home() {
+export interface IHomeProps {
+  appBarHeight: number;
+}
 
-  console.log("App render")
-
+export default function Home(props: IHomeProps) {
+  console.log("Home render appBarHeight: " + props.appBarHeight)
   return (
-    <div className="App">
-        <p> Home</p>
+    <div>
+      <p>Home</p>
     </div>
   );
 }
